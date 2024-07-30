@@ -1,0 +1,46 @@
+* {
+  font-family: 'Trebuchet MS', Arial, sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: $lightOrange;
+}
+
+button {
+  border: none;
+  font-family: 'Trebuchet MS', Arial, sans-serif;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: $boxShadow;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+//scroll
+::-webkit-scrollbar {
+  width: 1rem; 
+}
+
+::-webkit-scrollbar-track {
+  background: $lightOrange; 
+  border-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $orange; 
+  border-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $darkOrange; 
+}

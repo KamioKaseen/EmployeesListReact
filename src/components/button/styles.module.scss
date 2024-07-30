@@ -1,0 +1,14 @@
+.button {
+  box-shadow: $boxShadow;
+  transition: transform 0.3s ease-in-out;
+}
+
+.button:hover {
+  transform: translateY(-.5rem);
+  background-color: $orange;
+  color: $white;
+}
+
+.button:active {
+  background-color: $lightOrange;
+}
