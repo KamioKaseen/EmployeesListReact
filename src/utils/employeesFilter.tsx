@@ -1,31 +1,32 @@
-interface Employee {
+import { Employee } from "../types/types";
+
+interface EmployeeData {
   firstName: string;
   lastName: string;
   position: string;
-  subordinates?: Employee[] | null;
+  startDate: Date;
+  email: string | null;
+  subordinates?: EmployeeData[] | null;
 }
 
-export function employeesFilter(data: Employee[]): Employee[] {
-  const employees: Employee[] = [];
-  const uniqueEmployees = new Set<string>();
+export function employeesFilter(data: EmployeeData[]): Employee[] {
+  const seenKeys = new Set<string>();
 
-  function getEmployeeKey(employee: Employee): string {
+  function getEmployeeKey(employee: EmployeeData): string {
     return `${employee.firstName}-${employee.lastName}-${employee.position}`;
   }
 
-  function traverse(employeeList: Employee[]) {
-    employeeList.forEach(employee => {
+  function recursion(employeeList: EmployeeData[]): Employee[] {
+    return employeeList.flatMap(({ subordinates, ...employee }) => {
       const key = getEmployeeKey(employee);
-      if (!uniqueEmployees.has(key)) {
-        uniqueEmployees.add(key);
-        employees.push({ ...employee, subordinates: null });
+      if (!seenKeys.has(key)) {
+        seenKeys.add(key);
+        return [employee, ...recursion(subordinates || [])];
       }
-      if (employee.subordinates) {
-        traverse(employee.subordinates);
-      }
+      return recursion(subordinates || []);
     });
   }
 
-  traverse(data);
-  return employees;
+  return recursion(data);
 }
+

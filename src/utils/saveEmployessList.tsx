@@ -1,6 +1,6 @@
-import { DisplayedEmployee } from "../types/types";
+import { Employee } from "../types/types";
 
-export const saveEmployeesList = (employees: DisplayedEmployee[], fileName: string) => {
+export const saveEmployeesList = (employees: Employee[]) => {
   const htmlContent = 
     `<ol>
         ${employees.map(e => `
@@ -11,12 +11,13 @@ export const saveEmployeesList = (employees: DisplayedEmployee[], fileName: stri
       </ol>
     `;
 
-  const blob = new Blob([htmlContent], { type: 'text/html' });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = fileName;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(link.href);
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'employees.htm';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }

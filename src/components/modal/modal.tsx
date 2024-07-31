@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './styles.module.scss';
 import { Employee } from '../../types/types';
@@ -10,8 +9,8 @@ interface ModalProps {
   isOpen: boolean;
   selectedEmployees: Employee[];
   displayedEmployees: Employee[];
-  setSelectedEmployees: (employees: Employee[]) => void;
-  setDisplayedEmployees: (employees: Employee[]) => void;
+  setSelectedEmployees: (employees: Employee[] | ((prev: Employee[]) => Employee[])) => void;
+  setDisplayedEmployees: (employees: Employee[] | ((prev: Employee[]) => Employee[])) => void;
   onClose: () => void;
 }
 
@@ -34,7 +33,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   const handleСlose = (type: 'send' | 'close') => {
     if (type === 'send') {
-      setDisplayedEmployees(prev => [...prev, ...selectedEmployees]);
+      setDisplayedEmployees((prev) => [...prev, ...selectedEmployees]);
     }
     setSelectedEmployees([]);
     onClose();
@@ -48,15 +47,13 @@ export const Modal: React.FC<ModalProps> = ({
         <button
           className={styles.modal__close}
           onClick={() => handleСlose('close')}
-        >
-          X
+        >X
         </button>
         <button
           onClick={() => handleСlose('send')}
           className={styles.modal__send}
           disabled={selectedEmployees.length === 0}
-        >
-          Отправить
+        >Отправить
         </button>
         {availableEmployees.length === 0 ?
           <div className={styles.empty}><p>Сотрудники отсутствуют.</p></div> :
@@ -66,10 +63,8 @@ export const Modal: React.FC<ModalProps> = ({
             selectedEmployees={selectedEmployees}
           />
         }
-        
       </div>
     </div>,
     modalRoot
   );
 };
-

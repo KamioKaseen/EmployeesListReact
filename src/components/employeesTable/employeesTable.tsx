@@ -1,11 +1,11 @@
 import styles from './styles.module.scss';
-import { Employee } from '../../types/types';
 import { calculateWorkExperience } from '../../utils/calculateWorkExperience';
+import { Employee } from '../../types/types';
 
 interface EmployeesTableProps {
   selectedEmployees: Employee[];
   availableEmployees: Employee[];
-  setSelectedEmployees: (employees: Employee[]) => void;
+  setSelectedEmployees: (employees: Employee[] | ((prev: Employee[]) => Employee[])) => void;
 }
 
 export const EmployeesTable: React.FC<EmployeesTableProps> = ({
@@ -13,10 +13,9 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
   selectedEmployees,
   setSelectedEmployees,
 }) => {
-  
 
   const handleCheckboxChange = (employee: Employee, isChecked: boolean) => {
-    setSelectedEmployees(prev => {
+    setSelectedEmployees((prev: Employee[]) => {
       if (isChecked) {
         if (!prev.some(e => e.firstName === employee.firstName && e.lastName === employee.lastName && e.position === employee.position)) {
           return [...prev, employee];
@@ -46,7 +45,7 @@ export const EmployeesTable: React.FC<EmployeesTableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {availableEmployees.map((employee) => (
+          {availableEmployees.map((employee: Employee) => (
             <tr
               key={`${employee.firstName}-${employee.startDate.toLocaleDateString()}-${employee.position}-`} 
               className={isEmployeeSelected(employee) ? styles.selected : ''}

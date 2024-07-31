@@ -1,11 +1,11 @@
 import { useImperativeHandle, forwardRef, useRef, ForwardedRef } from 'react';
 import styles from './styles.module.scss'
 import { printSelectedEmployees } from '../../utils/printSelectedEmployees';
-import { DisplayedEmployee } from '../../types/types';
+import { Employee } from '../../types/types';
 
 
 interface EmployeesListProps {
-  displayedEmployees: DisplayedEmployee[];
+  displayedEmployees: Employee[];
 }
 
 interface EmployeesListHandle {
@@ -25,8 +25,8 @@ const EmployeesList = forwardRef<EmployeesListHandle, EmployeesListProps>(({ dis
 
   return (
     <ol className={styles.employeesList} ref={listRef}>
-      {displayedEmployees.map((e, index) => (
-        <li key={index}>
+      {displayedEmployees.map((e) => (
+        <li key={`${e.firstName}-${e.startDate.toLocaleDateString()}-${e.position}-`} >
           {`${e.lastName} ${e.firstName}`}, {e.position}
           {e.email && (
             <>

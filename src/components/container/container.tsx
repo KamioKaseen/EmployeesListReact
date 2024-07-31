@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react';
 import styles from './styles.module.scss'
-import { Employee } from '../../types/types';
 import EmployeesList from '../employeesList/employessList';
 import { Button } from '../button/button';
 import { Modal } from '../modal/modal';
 import { saveEmployeesList } from '../../utils/saveEmployessList';
+import { Employee } from '../../types/types';
 
 export const Container = () => {
   const [modalIsActive, setModalIsActive] = useState<boolean>(false);
@@ -39,7 +39,7 @@ export const Container = () => {
 
   const handleSaveListToFile = () => {
     if (displayedEmployees.length > 0) {
-      saveEmployeesList(displayedEmployees, 'employees_list.htm');
+      saveEmployeesList(displayedEmployees);
     } else {
       showMessage();
     }
